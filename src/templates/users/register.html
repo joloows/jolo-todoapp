@@ -2,10 +2,7 @@
 {% block content %}
   <form method="POST" action="">
     {% csrf_token %}
-    username:
-    <input type="text" name="username">
-    password:
-    <input type="password" name="password">
+    {{ form }}
     <input type="submit">
   </form>
 {% endblock content %}
