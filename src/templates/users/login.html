@@ -1,10 +1,10 @@
-{% extends 'base/base.html' %}
+{% extends "base/base.htm" %}
 {% block content %}
   {% if messages %}
     {% for message in messages %}<p>{{ message }}</p>{% endfor %}
   {% endif %}
   {% if form.errors %}<p>Your username and password did not match. Please try again.</p>{% endif %}
-  <form method="POST" action="">
+  <form method="post" action="">
     {% csrf_token %}
     username:
     <input type="text" name="username">
