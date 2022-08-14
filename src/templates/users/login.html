@@ -1,4 +1,4 @@
-{% extends "base/base.html" %}
+{% extends "base/base.htm" %}
 {% block content %}
   {% if messages %}
     {% for message in messages %}<p>{{ message }}</p>{% endfor %}
@@ -12,7 +12,4 @@
     <input type="password" name="password">
     <input type="submit">
   </form>
-  <br>
-  Don't have an account?
-  <a href={% url 'register' %}>Register</a>
 {% endblock content %}
