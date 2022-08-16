@@ -2,4 +2,9 @@
 {% block content %}
   <a href={% url 'logout' %} style="float:right; margin-right: 30px;">Logout</a>
   <h1>Main Page</h1>
+  {% if todos %}
+    {% for todo in todos %}<p>{{ todo }}</p>{% endfor %}
+  {% else %}
+    <p>Nothing to do today.</p>
+  {% endif %}
 {% endblock content %}
