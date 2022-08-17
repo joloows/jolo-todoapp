@@ -2,8 +2,9 @@
 {% load static %}
 {% block content %}
   <a href={% url 'logout' %} style="float:right; margin-right: 30px;">Logout</a>
-  <h1>Main Todo Page</h1>
-  {% if todos %}
+  <h1>Tasks Page</h1>
+  <h3>{{ todo }}</h3>
+  {% if tasks %}
     <script type="text/javascript">
       function handleClick(chkbox) {
           if (chkbox.checked == true) {
@@ -13,26 +14,22 @@
           }
       }
     </script>
-    {% for todo in todos %}
-      <a href={% url 'todo-view' todo.id %}>
-        <h3>{{ todo }}</h3>
-      </a>
-      <h4>{{ todo.todo_title }}</h4>
-      <p>{{ todo.todo_desc }}</p>
-      <p>{{ todo.date_created }}</p>
-      {% if todo.todo_is_finished == True %}
+    {% for task in tasks %}
+      <h4>{{ task.task_title }}</h4>
+      <p>{{ task.task_desc }}</p>
+      {% if task.task_is_finished == True %}
         <input class="chkbox"
-               id="{{ todo.id }}"
+               id="{{ task.id }}"
                type="checkbox"
-               name="todo_is_finished"
+               name="task_is_finished"
                value="true"
                onClick="handleClick(this);"
                checked>
       {% else %}
         <input class="chkbox"
-               id="{{ todo.id }}"
+               id="{{ task.id }}"
                type="checkbox"
-               name="todo_is_finished"
+               name="task_is_finished"
                value="false"
                onClick="handleClick(this);">
       {% endif %}
@@ -43,6 +40,6 @@
     </script>
     <script type="text/javascript" src="{% static 'js/checkbox.js' %}"></script>
   {% else %}
-    <p>Nothing to do today.</p>
+    <p>You have no tasks.</p>
   {% endif %}
 {% endblock content %}
