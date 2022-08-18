@@ -5,15 +5,15 @@
   <h1>Tasks Page</h1>
   <h3>{{ todo }}</h3>
   {% if tasks %}
-    <script type="text/javascript">
-      function handleClick(chkbox) {
-          if (chkbox.checked == true) {
-              chkbox.value = "false"
-          } else {
-              chkbox.value = "true"
-          }
-      }
-    </script>
+    {% comment %} <script type="text/javascript">
+   function handleClick(chkbox) {
+       if (chkbox.checked == true) {
+           chkbox.value = "0"
+       } else {
+           chkbox.value = "1"
+       }
+   }
+ </script> {% endcomment %}
     {% for task in tasks %}
       <h4>{{ task.task_title }}</h4>
       <p>{{ task.task_desc }}</p>
@@ -23,15 +23,13 @@
                type="checkbox"
                name="task_is_finished"
                value="true"
-               onClick="handleClick(this);"
                checked>
       {% else %}
         <input class="chkbox"
                id="{{ task.id }}"
                type="checkbox"
                name="task_is_finished"
-               value="false"
-               onClick="handleClick(this);">
+               value="false">
       {% endif %}
     {% endfor %}
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
