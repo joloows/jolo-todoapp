@@ -13,6 +13,9 @@ $(".chkbox").click(function() {
             'csrfmiddlewaretoken': csrftoken,
             _id: id,
             value: value
+        },
+        success: function (data) {
+            console.log("success");
         }
     })
 })
