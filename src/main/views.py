@@ -1,4 +1,4 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, HttpResponse
 from django.contrib.auth.decorators import login_required
 
 from .models import Todo, Task
@@ -14,6 +14,7 @@ def main(request):
         else:
             todo.todo_is_finished = False
         todo.save()
+        return HttpResponse()
 
     user = request.user
     todo = Todo.objects.filter(user=user)
@@ -35,6 +36,7 @@ def tasks_view(request, todo_id):
             task.task_is_finished = False
             print("task.task_is_finised=False")
         task.save()
+        return HttpResponse()
 
     todo = get_object_or_404(Todo, pk=todo_id)
     tasks = Task.objects.filter(todo=todo)
