@@ -9,7 +9,6 @@ def main(request):
     # when a checkbox is clicked
     # todo_is_finished attr. of Todo obj is updated based on checkbox value
     if request.method == 'POST':
-        print(request.POST)
         # {_id: {{todo.id}}, value= either '1' or '0'}
         todo_id = request.POST.get('_id')
         todo = Todo.objects.get(id=todo_id)
