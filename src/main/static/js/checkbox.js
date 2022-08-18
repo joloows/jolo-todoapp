@@ -1,12 +1,11 @@
 $(".chkbox").click(function() {
     var id = $(this).attr('id');
-    if ($(this).attr('checked') == true) {
-        $(this).prop('value', 'false');
+    if ($(this).is(':checked') == true) {
+        $(this).val("1");
     } else {
-        $(this).prop('value', 'true');
+        $(this).val("0");
     }
     var value = $(this).attr('value');
-    console.log(value);
     $.ajax({
         url: '',
         type: 'post',
@@ -14,10 +13,6 @@ $(".chkbox").click(function() {
             'csrfmiddlewaretoken': csrftoken,
             _id: id,
             value: value
-        },
-        cache: false,
-        success: function (data) {
-            console.log(data);
         }
     })
 })
