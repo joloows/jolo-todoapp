@@ -1,11 +1,11 @@
 $(".chkbox").click(function() {
     var id = $(this).attr('id');
-    var value = $(this).attr('value');
-    if (value == "true") {
-        value = "false";
+    if ($(this).is(':checked') == true) {
+        $(this).val("1");
     } else {
-        value = "true";
+        $(this).val("0");
     }
+    var value = $(this).attr('value');
     $.ajax({
         url: '',
         type: 'post',

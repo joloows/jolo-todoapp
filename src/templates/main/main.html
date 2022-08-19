@@ -4,15 +4,6 @@
   <a href={% url 'logout' %} style="float:right; margin-right: 30px;">Logout</a>
   <h1>Main Todo Page</h1>
   {% if todos %}
-    <script type="text/javascript">
-      function handleClick(chkbox) {
-          if (chkbox.checked == true) {
-              chkbox.value = "false"
-          } else {
-              chkbox.value = "true"
-          }
-      }
-    </script>
     {% for todo in todos %}
       <a href={% url 'todo-view' todo.id %}>
         <h3>{{ todo }}</h3>
@@ -25,22 +16,20 @@
                id="{{ todo.id }}"
                type="checkbox"
                name="todo_is_finished"
-               value="true"
-               onClick="handleClick(this);"
+               value="1"
                checked>
       {% else %}
         <input class="chkbox"
                id="{{ todo.id }}"
                type="checkbox"
                name="todo_is_finished"
-               value="false"
-               onClick="handleClick(this);">
+               value="0">
       {% endif %}
     {% endfor %}
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script type="text/javascript">
       var csrftoken = '{{csrf_token}}'
     </script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script type="text/javascript" src="{% static 'js/checkbox.js' %}"></script>
   {% else %}
     <p>Nothing to do today.</p>
