@@ -2,36 +2,33 @@
 {% load static %}
 {% block content %}
   <a href={% url 'logout' %} style="float:right; margin-right: 30px;">Logout</a>
-  <h1>Main Todo Page</h1>
-  {% if todos %}
-    {% for todo in todos %}
-      <a href={% url 'todo-view' todo.id %}>
-        <h3>{{ todo }}</h3>
-      </a>
-      <h4>{{ todo.todo_title }}</h4>
-      <p>{{ todo.todo_desc }}</p>
-      <p>{{ todo.date_created }}</p>
-      {% if todo.todo_is_finished == True %}
+  <h1>Tasks Page</h1>
+  <h3>{{ todo }}</h3>
+  {% if tasks %}
+    {% for task in tasks %}
+      <h4>{{ task.task_title }}</h4>
+      <p>{{ task.task_desc }}</p>
+      {% if task.task_is_finished == True %}
         <input class="chkbox"
-               id="{{ todo.id }}"
+               id="{{ task.id }}"
                type="checkbox"
-               name="todo_is_finished"
+               name="task_is_finished"
                value="1"
                checked>
       {% else %}
         <input class="chkbox"
-               id="{{ todo.id }}"
+               id="{{ task.id }}"
                type="checkbox"
-               name="todo_is_finished"
+               name="task_is_finished"
                value="0">
       {% endif %}
     {% endfor %}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script type="text/javascript">
       var csrftoken = '{{csrf_token}}'
     </script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script type="text/javascript" src="{% static 'js/checkbox.js' %}"></script>
   {% else %}
-    <p>Nothing to do today.</p>
+    <p>You have no tasks.</p>
   {% endif %}
 {% endblock content %}
