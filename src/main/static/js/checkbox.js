@@ -14,8 +14,5 @@ $(".chkbox").click(function() {
             _id: id,
             value: value
         },
-        success: function (data) {
-            console.log("success");
-        }
-    })
+    });
 })

@@ -1,0 +1,51 @@
+.todo-container {
+    position: relative;
+    margin-left: 19%;
+    width: 78%;
+    height: 100%;
+    border: 2px solid lightgrey;
+    border-radius: 10px;
+    padding: 15px;
+    overflow: auto;
+}
+
+.todo-head {
+    display: flex;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+#todos-label {
+    display: block;
+}
+
+.todo-create-button {
+    margin-top: auto;
+    margin-bottom: auto;
+    margin-left: auto;
+    margin-right: 10px;
+}
+
+.todo-object-container {
+    display: flex;
+    height: 40px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+#todo-object-title {
+    display: inline-block;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+a {
+    display: inline-block;
+    text-decoration: none;
+    color:black;
+}
+
+input[type=checkbox] {
+    display: inline-block;
+    margin-right: 8px;
+}
