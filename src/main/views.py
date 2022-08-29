@@ -1,7 +1,9 @@
 from django.shortcuts import render, get_object_or_404, HttpResponse
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 
 from .models import Todo, Task
+from .forms import TodoForm
 
 
 @login_required
@@ -50,3 +52,43 @@ def tasks_view(request, todo_id):
             'tasks': tasks
         }
         return render(request, 'main/todo_tasks.html', context)
+
+
+@login_required
+def create_todo(request):
+    if request.method == 'POST':
+        print(request.POST)
+        user = request.user
+        form = TodoForm(request.POST)
+        if form.is_valid():
+            todo_title = form.cleaned_data['todo_title']
+            todo_desc = form.cleaned_data['todo_desc']
+            Todo.objects.create(
+                user=user, todo_title=todo_title, todo_desc=todo_desc)
+        else:
+            print("form not valid.")
+        return HttpResponse()
+
+
+@login_required
+def update_todo(request):
+    if request.method == 'POST':
+        user = request.user
+        form = TodoForm(request.POST)
+        if form.is_valid():
+            todo_id = form.cleaned_data['_id']
+            todo = Todo.objects.get(id=todo_id)
+            if todo.user == user:
+                todo.todo_title = form.cleaned_data['todo_title']
+                todo.todo_desc = form.cleaned_data['todo_desc']
+                todo.save()
+            return HttpResponse()
+
+
+@login_required
+def delete_todo(request, todo_id):
+    if request.method == 'POST':
+        todo = get_object_or_404(Todo, pk=todo_id)
+        if todo.user == request.user:
+            todo.delete()
+            return HttpResponse()
