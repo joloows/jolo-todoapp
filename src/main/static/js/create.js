@@ -1,5 +1,5 @@
 const modal = document.querySelector(".form-popup");
-const trigger = document.querySelector(".todo-create-button");
+const trigger = document.querySelector(".todo-create");
 const closeButton = document.querySelector(".btn.cancel");
 
 function toggleModal() {
@@ -32,6 +32,7 @@ $("#myForm").on("submit", function(e) {
           vals[0] = Object.values(formData[0]);
         }
         console.log(vals);
+        location.href = "http://127.0.0.1:8000/main"
       },
       error:function() {
         alert('error');

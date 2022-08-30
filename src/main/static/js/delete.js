@@ -9,6 +9,7 @@ function deleteTodo(element) {
             },
             success: function () {
                 console.log($(element).closest('.div'));
+                location.href = "http://127.0.0.1:8000/main"
             },
             error: function (url) {
                 alert('error');

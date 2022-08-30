@@ -1,51 +1,120 @@
 .todo-container {
     position: relative;
+    top: 0;
+    bottom: 0;
     margin-left: 19%;
     width: 78%;
     height: 100%;
-    border: 2px solid lightgrey;
     border-radius: 10px;
     padding: 15px;
-    overflow: auto;
+    overflow: visible;
 }
 
 .todo-head {
     display: flex;
+    border-radius: 30px;
     margin-top: 5px;
     margin-bottom: 5px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    background-color: #16697A;
+    color: white;
 }
 
 #todos-label {
     display: block;
+    margin-left: 20px;
+    font-size: 50px;
 }
 
-.todo-create-button {
+.todo-create {
     margin-top: auto;
     margin-bottom: auto;
     margin-left: auto;
-    margin-right: 10px;
+    margin-right: 30px;
+    cursor: pointer;
+    font-size: 60px;
+    color: white;
+}
+
+.todo-list-container {
+    background-color: white;
+    border-radius: 20px;
+    margin-top: 10px;
+    padding-top: 2px;
+    padding-bottom: 2px
 }
 
 .todo-object-container {
     display: flex;
     height: 40px;
-    margin-top: 5px;
-    margin-bottom: 5px;
+    margin: 10px;
+    padding: 5px;
+    color: #16697A;
+    border: 1px solid rgb(226, 226, 226);
+    border-radius: 10px;
+}
+
+.todo-object-container:hover {
+    background-color: lightgrey;
 }
 
 #todo-object-title {
     display: inline-block;
     margin-top: auto;
     margin-bottom: auto;
+    color: #16697A;
+    font-weight: bold;
+    text-decoration: none;
 }
 
-a {
+a #todo-object-title {
     display: inline-block;
     text-decoration: none;
-    color:black;
 }
 
 input[type=checkbox] {
     display: inline-block;
-    margin-right: 8px;
+    margin-right: 15px;
+    margin-left: 10px;
+}
+
+#plus {
+    /* change this value to the desired width */
+    --width: 40px;
+    /* setting the background color */
+    background-color: white;
+    /* setting height and width with the value of css variable */
+    width: var(--width);
+    height: var(--width);
+    /* perfect circle */
+    border-radius: var(--width);
+    /* centrering */
+    display: grid;
+    place-items: center;
+    /* don't delete this, is important for the ::before and ::after pseudoelements */
+    position: relative;
+}
+
+#plus::before,
+#plus::after {
+    content: "";
+    /* using css calc() https://developer.mozilla.org/en-US/docs/Web/CSS/calc */
+    /* height and width relative to css variable, change to what you feel is good */
+    height: calc(var(--width) / 1.5);
+    width: calc(var(--width) / 5);
+    /* coloring the pseudoelements */
+    background-color: #16697A;
+    /* here the TRICK, using calc() we easily canculate the rotation, without hardcoding this value */
+    transform: rotate(calc(var(--i) * 90deg));
+    /* important don't delete */
+    position: absolute;
+}
+
+#plus::before {
+    --i: 1;
+}
+
+#plus::after {
+    --i: 2;
 }

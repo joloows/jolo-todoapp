@@ -10,9 +10,7 @@
   <div class="todo-container">
     <div class="todo-head">
       <h1 id="todos-label">Todos</h1>
-      <a class="todo-create-button">
-        <button class="todo-create-button">+</button>
-      </a>
+      <a id="plus" class="todo-create"></a>
       <div class="form-popup" id="myPopupForm">
         <form method="post" class="form-container" id="myForm">
           <h1>Add Todo</h1>
@@ -31,31 +29,33 @@
     </div>
     <div class="todo-list">
       {% if todos %}
-        {% for todo in todos %}
-          <div class="todo-object-container">
-            {% if todo.todo_is_finished == True %}
-              <input class="chkbox"
-                     id="{{ todo.id }}"
-                     type="checkbox"
-                     name="todo_is_finished"
-                     value="1"
-                     checked>
-            {% else %}
-              <input class="chkbox"
-                     id="{{ todo.id }}"
-                     type="checkbox"
-                     name="todo_is_finished"
-                     value="0">
-            {% endif %}
-            <a id="todo-object-title" href={% url 'todo' todo.id %}>{{ todo.todo_title }}</a>
-            <button onclick="myFunction(this)" class="dropbtn" id="{{ todo.id }}">···</button>
-            <div id="dropdown-{{ todo.id }}" class="dropdown-content">
-              <a>Edit</a>
-              <a data-url="{% url 'todo-delete' todo.id %}" onclick="deleteTodo(this)">Delete</a>
-              <a href="#">Set a Reminder</a>
+        <div class="todo-list-container">
+          {% for todo in todos %}
+            <div class="todo-object-container">
+              {% if todo.todo_is_finished == True %}
+                <input class="chkbox"
+                       id="{{ todo.id }}"
+                       type="checkbox"
+                       name="todo_is_finished"
+                       value="1"
+                       checked>
+              {% else %}
+                <input class="chkbox"
+                       id="{{ todo.id }}"
+                       type="checkbox"
+                       name="todo_is_finished"
+                       value="0">
+              {% endif %}
+              <a id="todo-object-title" href={% url 'todo' todo.id %}>{{ todo.todo_title }}</a>
+              <a onclick="showDropdown(this)" class="dropbtn" id="{{ todo.id }}">···</a>
+              <div id="dropdown-{{ todo.id }}" class="dropdown-content">
+                <a>Edit</a>
+                <a data-url="{% url 'todo-delete' todo.id %}" onclick="deleteTodo(this)">Delete</a>
+                <a href="#">Set a Reminder</a>
+              </div>
             </div>
-          </div>
-        {% endfor %}
+          {% endfor %}
+        </div>
       {% else %}
         <p>Nothing to do.</p>
       {% endif %}
