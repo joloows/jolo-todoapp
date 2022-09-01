@@ -71,12 +71,11 @@ def create_todo(request):
 
 
 @login_required
-def update_todo(request):
+def update_todo(request, todo_id):
     if request.method == 'POST':
         user = request.user
         form = TodoForm(request.POST)
         if form.is_valid():
-            todo_id = form.cleaned_data['_id']
             todo = Todo.objects.get(id=todo_id)
             if todo.user == user:
                 todo.todo_title = form.cleaned_data['todo_title']
