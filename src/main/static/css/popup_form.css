@@ -1,5 +1,5 @@
 /* The popup form - hidden by default */
-.form-popup {
+.create-form-popup, [class^="update-form-popup-"] {
     position: fixed;
     left: 0;
     top: 0;
@@ -62,7 +62,7 @@
 }
 
 /* Add a red background color to the cancel button */
-.form-container .cancel {
+.form-container [class^="btn cancel"] {
     background-color: red;
 }
 
