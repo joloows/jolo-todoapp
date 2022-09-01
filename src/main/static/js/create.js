@@ -1,22 +1,26 @@
-const modal = document.querySelector(".form-popup");
-const trigger = document.querySelector(".todo-create");
-const closeButton = document.querySelector(".btn.cancel");
 
-function toggleModal() {
+function createTodo() {
+  const modal = document.querySelector(".create-form-popup");
+  const closeButton = document.querySelector(".btn.cancel-create");
+
+  function toggleModal() {
     modal.classList.toggle("show-form-popup");
+  }
+
+  function windowOnClick(event) {
+      if (modal.classList.contains("show-form-popup")) {
+          if (event.target === modal) {
+              toggleModal();
+          }
+      }
+  }
+
+  toggleModal();
+  closeButton.addEventListener("click", toggleModal);
+  window.addEventListener("click", windowOnClick);
 }
 
-function windowOnClick(event) {
-    if (event.target === modal) {
-        toggleModal();
-    }
-}
-
-trigger.addEventListener("click", toggleModal);
-closeButton.addEventListener("click", toggleModal);
-window.addEventListener("click", windowOnClick);
-
-$("#myForm").on("submit", function(e) {
+$("#todo-create-form").on("submit", function(e) {
   e.preventDefault();
   var formData = $(this).serializeArray()
   formData.push({ name: "csrfmiddlewaretoken", value: csrftoken });
