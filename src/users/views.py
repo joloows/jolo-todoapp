@@ -12,7 +12,7 @@ def register_view(request):
             form.save()
             user = form.cleaned_data['username']
             messages.success(
-                request, f'Successfully created account for {user}!')
+                request, f'Successfully created account for "{user}"!')
             return redirect('login')
     else:
         form = UserRegisterForm()
@@ -28,3 +28,7 @@ class UserLoginView(LoginView):
 
 class UserLogoutView(LogoutView):
     next_page = 'login'
+
+
+def user_profile(request):
+    return render(request, 'users/profile.html')
