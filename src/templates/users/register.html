@@ -1,10 +1,29 @@
 {% extends "base/base.html" %}
+{% load static %}
 {% block content %}
-  <form method="post" action="">
-    {% csrf_token %}
-    {{ form }}
-    <input type="submit">
-  </form>
-  Already have an account?
-  <a href={% url 'login' %}>Login</a>
+  <script src="https://apis.google.com/js/platform.js" async defer></script>
+  <link rel="stylesheet" href="{% static 'css/register.css' %}">
+  <div class="form-container">
+    <div class="register-form-container">
+      <form method="post" action="">
+        {% csrf_token %}
+        <h1>Register</h1>
+        {% if form.errors %}
+          <div class="register-error-container">
+            <p>Your username and password did not match. Please try again.</p>
+          </div>
+        {% endif %}
+        <input type="text" placeholder="Username" name="username">
+        <input type="password" placeholder="Password" name="password1">
+        <input type="password" placeholder="Confirm Password" name="password2">
+        <input class="form-btn" type="submit" value="Register">
+        <h5>or</h5>
+      </form>
+      <div class="g-signin2" data-onsuccess="onSignIn"></div>
+      <div class="login-container">
+        <p>Already have an account?</p>
+        <a href={% url 'login' %}>Login</a>
+      </div>
+    </div>
+  </div>
 {% endblock content %}

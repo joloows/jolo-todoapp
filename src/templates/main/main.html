@@ -5,77 +5,103 @@
   <link rel="stylesheet" href="{% static 'css/todos.css' %}">
   <link rel="stylesheet" href="{% static 'css/dropdown.css' %}">
   <link rel="stylesheet" href="{% static 'css/popup_form.css' %}">
-  <div class="sidebar"></div>
-  <div class="todo-container">
-    <div class="todo-head">
-      <h1 id="todos-label">Todos</h1>
-      <a id="plus" class="todo-create" onclick="createTodo()"></a>
-      <div class="create-form-popup">
-        <form method="post" class="form-container" id="todo-create-form">
-          <h1>Add Todo</h1>
-          <label for="todo_title">
-            <b>Task Title</b>
-          </label>
-          <input type="text" placeholder="Add a Title..." name="todo_title" required>
-          <label for="todo_desc">
-            <b>Task Description</b>
-          </label>
-          <input type="text" placeholder="Add a description..." name="todo_desc">
-          <input type="submit" class="btn" value="Add">
-          <button type="button" class="btn cancel-create">Close</button>
-        </form>
+  <div class="app">
+    <div class="menu-toggle">
+      <div class="hamburger">
+        <span></span>
       </div>
     </div>
-    <div class="todo-list">
-      {% if todos %}
-        <div class="todo-list-container">
-          {% for todo in todos %}
-            <div class="todo-object-container">
-              {% if todo.todo_is_finished == True %}
-                <input class="chkbox"
-                       id="{{ todo.id }}"
-                       type="checkbox"
-                       name="todo_is_finished"
-                       value="1"
-                       checked>
-              {% else %}
-                <input class="chkbox"
-                       id="{{ todo.id }}"
-                       type="checkbox"
-                       name="todo_is_finished"
-                       value="0">
-              {% endif %}
-              <a id="todo-object-title" href={% url 'todo' todo.id %}>{{ todo.todo_title }}</a>
-              <a onclick="showDropdown(this)" class="dropbtn" id="{{ todo.id }}">···</a>
-              <div id="dropdown-{{ todo.id }}" class="dropdown-content">
-                <a class="todo-update-{{ todo.id }}" onclick="updateTodo(this)">Edit</a>
-                <a data-url="{% url 'todo-delete' todo.id %}" onclick="deleteTodo(this)">Delete</a>
-                <a href="#">Set a Reminder</a>
-              </div>
-              <div class="update-form-popup-{{ todo.id }}">
-                <form data-url="{% url 'todo-update' todo.id %}"
-                      method="post"
-                      class="form-container"
-                      id="todo-update-form-{{ todo.id }}">
-                  <h1>Edit Todo</h1>
-                  <label for="todo_title">
-                    <b>Task Title</b>
-                  </label>
-                  <input type="text" value="{{ todo.todo_title }}" name="todo_title" required>
-                  <label for="todo_desc">
-                    <b>Task Description</b>
-                  </label>
-                  <input type="text" value="{{ todo.todo_desc }}" name="todo_desc">
-                  <input type="submit" class="btn" value="Update">
-                  <button type="button" class="btn cancel-{{ todo.id }}">Close</button>
-                </form>
-              </div>
-            </div>
-          {% endfor %}
+    <div class="sidebar">
+      <nav class="menu">
+        <div>
+          <img src="{% static 'img/test.jpg' %}" alt="" height="90" width="90">
+          <h3>{{ user.username }}</h3>
         </div>
-      {% else %}
-        <p>Nothing to do.</p>
-      {% endif %}
+        <a href={% url 'home' %} class="menu-item">Home</a>
+        <a href={% url 'profile' %} class="menu-item">Profile</a>
+        <a href="" class="menu-item is-active">Todos</a>
+        <a href={% url 'logout' %} class="menu-item">Logout</a>
+      </nav>
+    </div>
+    <div class="todo-container">
+      <div class="todo-head">
+        <h1 id="todos-label">Todos</h1>
+        <a id="plus" class="todo-create" onclick="createTodo()"></a>
+        <div class="create-form-popup">
+          <form method="post" class="form-container" id="todo-create-form">
+            {% csrf_token %}
+            <h1>Add Todo</h1>
+            <label for="todo_title">
+              <b>Task Title</b>
+            </label>
+            <input type="text" placeholder="Add a Title..." name="todo_title" required>
+            <label for="todo_desc">
+              <b>Task Description</b>
+            </label>
+            <input type="text" placeholder="Add a description..." name="todo_desc">
+            <input type="submit" class="btn" value="Add">
+            <button type="button" class="btn cancel-create">Close</button>
+          </form>
+        </div>
+      </div>
+      <div class="todo-list">
+        {% if todos %}
+          <div class="todo-list-container">
+            {% for todo in todos %}
+              <div class="todo-object-container-{{ todo.id }}">
+                {% if todo.todo_is_finished == True %}
+                  <input class="chkbox"
+                         id="{{ todo.id }}"
+                         type="checkbox"
+                         name="todo_is_finished"
+                         value="1"
+                         checked>
+                {% else %}
+                  <input class="chkbox"
+                         id="{{ todo.id }}"
+                         type="checkbox"
+                         name="todo_is_finished"
+                         value="0">
+                {% endif %}
+                <a id="todo-object-title" href={% url 'todo' todo.id %}>{{ todo.todo_title }}</a>
+                <a onclick="showDropdown(this.id);" class="dropbtn" id="{{ todo.id }}">···</a>
+                <div class="dropdown">
+                  <div id="dropdown-{{ todo.id }}" class="dropdown-content">
+                    <a class="todo-update-{{ todo.id }}" onclick="updateTodo(this)">Edit</a>
+                    <a data-url="{% url 'todo-delete' todo.id %}"
+                       id="{{ todo.id }}"
+                       onclick="deleteTodo(this)">Delete</a>
+                    <a href="#">Set a Reminder</a>
+                  </div>
+                </div>
+                <div class="update-form-popup-{{ todo.id }}">
+                  <form data-url="{% url 'todo-update' todo.id %}"
+                        method="post"
+                        class="form-container"
+                        id="todo-update-form-{{ todo.id }}">
+                    {% csrf_token %}
+                    <h1>Edit Todo</h1>
+                    <label for="todo_title">
+                      <b>Task Title</b>
+                    </label>
+                    <input type="text" value="{{ todo.todo_title }}" name="todo_title" required>
+                    <label for="todo_desc">
+                      <b>Task Description</b>
+                    </label>
+                    <input type="text" value="{{ todo.todo_desc }}" name="todo_desc">
+                    <input type="submit" class="btn" value="Update">
+                    <button type="button" class="btn cancel-{{ todo.id }}">Close</button>
+                  </form>
+                </div>
+              </div>
+            {% endfor %}
+          </div>
+        {% else %}
+          <div class="todo-list-container">
+            <p id="nothing">Nothing to do.</p>
+          </div>
+        {% endif %}
+      </div>
     </div>
     <script type="text/javascript">
       var csrftoken = '{{csrf_token}}'
@@ -86,6 +112,7 @@
     <script type="text/javascript" src="{% static 'js/create.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/delete.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/checkbox.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/sidebar.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/test.js' %}"></script> <!-- TESTS -->
   </div>
-  <a href={% url 'logout' %} style="float:right; margin-right: 30px;">Logout</a>
 {% endblock content %}

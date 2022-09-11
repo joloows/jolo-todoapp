@@ -1,9 +1,14 @@
 from django.shortcuts import render, get_object_or_404, HttpResponse
 from django.contrib.auth.decorators import login_required
-from django.contrib import messages
+from django.core import serializers
+from django.core.paginator import Paginator
 
 from .models import Todo, Task
 from .forms import TodoForm
+
+
+def home(request):
+    return render(request, 'home/home.html')
 
 
 @login_required
@@ -13,7 +18,7 @@ def main(request):
     if request.method == 'POST':
         # {_id: {{todo.id}}, value= either '1' or '0'}
         todo_id = request.POST.get('_id')
-        todo = Todo.objects.get(id=todo_id)
+        todo = Todo.objects.get(pk=todo_id)
         if request.POST.get('value') == '1':
             todo.todo_is_finished = True
         else:
@@ -57,31 +62,29 @@ def tasks_view(request, todo_id):
 @login_required
 def create_todo(request):
     if request.method == 'POST':
-        print(request.POST)
         user = request.user
         form = TodoForm(request.POST)
         if form.is_valid():
-            todo_title = form.cleaned_data['todo_title']
-            todo_desc = form.cleaned_data['todo_desc']
-            Todo.objects.create(
-                user=user, todo_title=todo_title, todo_desc=todo_desc)
-        else:
-            print("form not valid.")
-        return HttpResponse()
+            todo = form.save(commit=False)
+            todo.user = user
+            instance = todo.save()
+            data = serializers.serialize('json', [instance, ])
+            return HttpResponse(data)
+    return HttpResponse()
 
 
 @login_required
 def update_todo(request, todo_id):
     if request.method == 'POST':
+        todo = get_object_or_404(Todo, pk=todo_id)
         user = request.user
-        form = TodoForm(request.POST)
+        form = TodoForm(request.POST, instance=todo)
         if form.is_valid():
-            todo = Todo.objects.get(id=todo_id)
             if todo.user == user:
-                todo.todo_title = form.cleaned_data['todo_title']
-                todo.todo_desc = form.cleaned_data['todo_desc']
-                todo.save()
-            return HttpResponse()
+                instance = form.save()
+                data = serializers.serialize('json', [instance, ])
+                return HttpResponse(data)
+    return HttpResponse()
 
 
 @login_required
@@ -91,3 +94,15 @@ def delete_todo(request, todo_id):
         if todo.user == request.user:
             todo.delete()
             return HttpResponse()
+    return HttpResponse()
+
+
+@login_required
+def paginate_todo(request, page):
+    if request.method == 'GET':
+        todos = Todo.objects.filter(user=request.user)
+        p = Paginator(todos, 8)
+        todo_page = p.page(page)
+        data = serializers.serialize('json', todo_page.object_list)
+        return HttpResponse(data)
+    return HttpResponse()
