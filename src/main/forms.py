@@ -1,7 +1,9 @@
 from django import forms
+from .models import Todo
 
 
-class TodoForm(forms.Form):
-    todo_title = forms.CharField(max_length=50)
-    todo_desc = forms.CharField(
-        widget=forms.Textarea(), max_length=250)
+class TodoForm(forms.ModelForm):
+
+    class Meta:
+        model = Todo
+        fields = ['todo_title', 'todo_desc']
