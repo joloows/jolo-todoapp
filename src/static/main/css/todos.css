@@ -1,11 +1,13 @@
 
 .todo-container {
-    margin-left: clamp(247px, 19%, 301px);
-    width: 78%;
+    margin-left: clamp(248px, 19%, 301px);
+    margin-top: 15px;
+    width: 80%;
     height: 100%;
     border-radius: 10px;
-    padding: 15px;
+    padding: 10px;
     position: relative;
+    box-sizing: content-box;
 }
 
 .todo-head {
@@ -43,7 +45,7 @@
     padding-bottom: 2px
 }
 
-.todo-object-container {
+[class^=todo-object-container-] {
     display: flex;
     height: 40px;
     margin: 10px;
@@ -52,9 +54,10 @@
     border: 1px solid rgb(226, 226, 226);
     border-radius: 10px;
     overflow: hidden;
+    transition: 0.1s linear;
 }
 
-.todo-object-container:hover {
+[class^=todo-object-container-]:hover {
     background-color: rgba(211, 211, 211, 0.215);
 }
 
@@ -65,6 +68,10 @@
     color: #16697A;
     font-weight: bold;
     text-decoration: none;
+}
+
+#nothing {
+    text-align: center;
 }
 
 a #todo-object-title {
@@ -125,13 +132,39 @@ input[type=checkbox] {
 
 
 /* this should be global */
-@media only screen and (max-width: 1180px) {
-    .sidebar {
-        left: -250px;
-    }
+@media (max-width: 1180px) {
+    
     .todo-container {
+        position: absolute;
+        box-sizing: border-box;
+        margin: 0;
         width: 100%;
-        margin-left: 0;
-        padding: 0;
+        padding: 10px 10px 0 10px;
+        z-index: 1;
+    }
+    
+    .menu-toggle {
+        display: block;
+        z-index: 100;
+        transition: 0.2s ease;
+    }
+
+    .sidebar {
+        position: fixed;
+        left: -250px;
+        max-width: 250px;
+        z-index: 100;
+        transition: 0.2s;
+    }
+
+    .menu-toggle.is-active {
+        left: 260px;
+        transition: 0.2s ease;
+    }
+
+    .sidebar.is-active {
+        left: 0;
+        box-shadow: 0 0 0 1600px rgba(0, 0, 0, 0.5);
+        z-index: 30;
     }
 }

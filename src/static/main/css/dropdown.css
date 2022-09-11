@@ -3,12 +3,20 @@
     display: block;
     color: #16697A;
     padding: 5px;
+    padding-left: 6px;
+    padding-right: 6px;
     font-size: 20px;
     cursor: pointer;
     margin-left: auto;
     margin-right: 5px;
     margin-top: auto;
     margin-bottom: auto;
+    border-radius: 50px;
+    overflow: hidden;
+}
+
+.dropbtn:hover {
+    background-color: lightgrey;
 }
 
 /* Dropdown button on hover & focus */
@@ -18,8 +26,9 @@
 
 /* The container <div> - needed to position the dropdown content */
 .dropdown {
-    position: relative;
-    display: inline-block;
+    position: absolute;
+    display: block;
+    z-index: 50;
 }
 
 /* Dropdown Content (Hidden by Default) */
@@ -28,7 +37,8 @@
     position: absolute;
     background-color: #f1f1f1;
     min-width: 160px;
-    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.1);
+    z-index: 1;
 }
 
 /* Links inside the dropdown */
