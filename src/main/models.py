@@ -13,6 +13,13 @@ class Todo(models.Model):
     def __str__(self) -> str:
         return f'Todo #{self.id}'
 
+    def save(self, *args, **kwargs):
+        super(Todo, self).save(*args, **kwargs)
+        return self
+
+    class Meta:
+        ordering = ['-date_created']
+
 
 class Task(models.Model):
     todo = models.ForeignKey(
