@@ -24,7 +24,9 @@ function createTodo() {
 $(document).on("submit", "#todo-create-form", function(e) {
   if ($(".todo-list-container").children("p")) {
     $(".todo-list-container").children("p").remove();
-  }
+  } 
+  checkObjectCount();
+
   e.preventDefault();
   var formData = $(this).serializeArray();
   $.ajax(
@@ -37,9 +39,9 @@ $(document).on("submit", "#todo-create-form", function(e) {
         // test(this['type'], this['url'], this['data']);
         
         var data = JSON.parse(response);
-        id = data[0].pk;
-        title = data[0].fields["todo_title"];
-        desc = data[0].fields["todo_desc"];
+        var id = data[0].pk;
+        var title = data[0].fields["todo_title"];
+        var desc = data[0].fields["todo_desc"];
 
         $(".todo-list-container").prepend(createTodoHTML(id, title, desc));
       },
@@ -49,6 +51,14 @@ $(document).on("submit", "#todo-create-form", function(e) {
     }
   );
 });
+
+function checkObjectCount() {
+    var todoListContainer = $(".todo-list-container")
+    if (todoListContainer.children("[class^=todo-object-container-]").length == 8) {
+        lastTodoElement = $(".todo-list-container [class^=todo-object-container-]").last();
+        lastTodoElement.remove();
+    }
+}
 
 function createTodoHTML(id, title, desc) {
   return `<div class="todo-object-container-${id}">

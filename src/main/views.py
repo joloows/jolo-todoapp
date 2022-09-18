@@ -1,3 +1,5 @@
+import json
+
 from django.shortcuts import render, get_object_or_404, HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.core import serializers
@@ -28,11 +30,19 @@ def main(request):
 
     else:
         user = request.user
-        todo = Todo.objects.filter(user=user)
-        context = {
-            'todos': todo,
-        }
-        return render(request, 'main/main.html', context)
+        todos = Todo.objects.filter(user=user)
+        p = Paginator(todos, 8)
+        if 'page' in request.GET:
+            page = request.GET.get('page')
+            todo_page = p.page(page)
+            data = serializers.serialize('json', todo_page.object_list)
+            return HttpResponse(data)
+        else:
+            todo_page = p.page(1)
+            context = {
+                'todos': todo_page,
+            }
+            return render(request, 'main/main.html', context)
 
 
 @login_required
@@ -94,15 +104,4 @@ def delete_todo(request, todo_id):
         if todo.user == request.user:
             todo.delete()
             return HttpResponse()
-    return HttpResponse()
-
-
-@login_required
-def paginate_todo(request, page):
-    if request.method == 'GET':
-        todos = Todo.objects.filter(user=request.user)
-        p = Paginator(todos, 8)
-        todo_page = p.page(page)
-        data = serializers.serialize('json', todo_page.object_list)
-        return HttpResponse(data)
     return HttpResponse()

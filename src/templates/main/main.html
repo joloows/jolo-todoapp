@@ -5,6 +5,7 @@
   <link rel="stylesheet" href="{% static 'css/todos.css' %}">
   <link rel="stylesheet" href="{% static 'css/dropdown.css' %}">
   <link rel="stylesheet" href="{% static 'css/popup_form.css' %}">
+  <link rel="stylesheet" href="{% static 'css/pagination.css' %}">
   <div class="app">
     <div class="menu-toggle">
       <div class="hamburger">
@@ -102,6 +103,19 @@
           </div>
         {% endif %}
       </div>
+      <div class="pagination-btn-container">
+        <div class="pagination-btn">
+          <button class="first-page-btn">
+            <<
+          </button>
+          <button class="previous-page-btn">
+            <
+          </button>
+          <h5 id="current-page">1</h5>
+          <button class="next-page-btn show">></button>
+          <button class="last-page-btn show">>></button>
+        </div>
+      </div>
     </div>
     <script type="text/javascript">
       var csrftoken = '{{csrf_token}}'
@@ -113,6 +127,7 @@
     <script type="text/javascript" src="{% static 'js/delete.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/checkbox.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/sidebar.js' %}"></script>
-    <script type="text/javascript" src="{% static 'js/test.js' %}"></script> <!-- TESTS -->
+    <script type="text/javascript" src="{% static 'js/pagination.js' %}"></script>
+    <!-- <script type="text/javascript" src="{% static 'js/test.js' %}"></script>  TESTS -->
   </div>
 {% endblock content %}
