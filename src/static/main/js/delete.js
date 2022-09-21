@@ -11,15 +11,23 @@ function deleteTodo(element) {
                 // test
                 // test(this['type'], this['url'], this['data']);
                 todoList = $(".todo-list-container");
-
-                if (todoList.children().length <= 0) {
-                    todoList.empty();
-                    todoList.prepend(`<p id="nothing">Nothing to do.</p>`);
-                    // remove pagination buttons here
+                todoListChild = $(".todo-list-container [class^=todo-object-container-]").length;
+                $(".todo-object-container-" + element.id).remove();
+                if (todoListChild <= 1) { // If todo list is empty
+                    if (numPages == 1) { 
+                        console.log("append p tag");
+                        todoList.append(`<p id="nothing">Nothing to do.</p>`);
+                    } else { // If numPages > 1, move previous page
+                        console.log("move previous page");
+                        currentPage--;
+                        document.getElementById("current-page").innerHTML = currentPage;
+                        getPage(currentPage);
+                    }
                 } else {
-                    todoList.empty();
-                    getPage(currentPage); // get current page content
+                    getPage(currentPage);
                 }
+                updateNumPages();
+                console.log('Delete success');
             },
             error: function () {
                 alert('error');
