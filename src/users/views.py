@@ -6,6 +6,10 @@ from .forms import UserRegisterForm
 
 
 def register_view(request):
+
+    if request.user.is_authenticated:
+        return redirect('main')
+
     if request.method == 'POST':
         form = UserRegisterForm(request.POST)
         if form.is_valid:
@@ -16,8 +20,8 @@ def register_view(request):
             return redirect('login')
     else:
         form = UserRegisterForm()
-    context = {'form': form}
-    return render(request, 'users/register.html', context)
+        context = {'form': form}
+        return render(request, 'users/register.html', context)
 
 
 class UserLoginView(LoginView):
