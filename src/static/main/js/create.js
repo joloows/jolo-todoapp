@@ -37,13 +37,18 @@ $(document).on("submit", "#todo-create-form", function(e) {
       success: function (response) {
         // test
         // test(this['type'], this['url'], this['data']);
-        
         var data = JSON.parse(response);
         var id = data[0].pk;
         var title = data[0].fields["todo_title"];
         var desc = data[0].fields["todo_desc"];
-
-        $(".todo-list-container").prepend(createTodoHTML(id, title, desc));
+        
+        if (currentPage == 1) {
+          $(".todo-list-container").prepend(createTodoHTML(id, title, desc));
+        } else {
+          getPage(currentPage);
+        }
+        updateNumPages();
+        console.log("Create success");
       },
       error:function() {
         alert('error');

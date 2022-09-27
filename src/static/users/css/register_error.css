@@ -1,0 +1,9 @@
+.field-error {
+    margin: 0;
+    color: #bb4141;
+    font-weight: bold;
+}
+
+.register-form-container input.error {
+    border-bottom: 2px solid #bb4141;
+}

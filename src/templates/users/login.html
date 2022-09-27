@@ -18,7 +18,10 @@
             <p>Your username and password did not match. Please try again.</p>
           </div>
         {% endif %}
-        <input type="text" placeholder="Username" name="username">
+        <input type="text"
+               {% if username %} value="{{ username }}"{% endif %}
+               placeholder="Username"
+               name="username">
         <input type="password" placeholder="Password" name="password">
         <input class="form-btn" type="submit" value="Login">
         <h5>or</h5>

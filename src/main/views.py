@@ -15,10 +15,8 @@ def home(request):
 
 @login_required
 def main(request):
-    # when a checkbox is clicked
-    # todo_is_finished attr. of Todo obj is updated based on checkbox value
+    # checkbox
     if request.method == 'POST':
-        # {_id: {{todo.id}}, value= either '1' or '0'}
         todo_id = request.POST.get('_id')
         todo = Todo.objects.get(pk=todo_id)
         if request.POST.get('value') == '1':
@@ -37,10 +35,16 @@ def main(request):
             todo_page = p.page(page)
             data = serializers.serialize('json', todo_page.object_list)
             return HttpResponse(data)
+        if 'getPageNum' in request.GET:
+            print(request.GET)
+            if request.GET.get('getPageNum') == '1':
+                print(p.num_pages)
+                return HttpResponse(p.num_pages)
         else:
             todo_page = p.page(1)
             context = {
                 'todos': todo_page,
+                'num_pages': p.num_pages,
             }
             return render(request, 'main/main.html', context)
 
@@ -66,7 +70,7 @@ def tasks_view(request, todo_id):
             'todo': todo,
             'tasks': tasks
         }
-        return render(request, 'main/todo_tasks.html', context)
+        return render(request, 'main/tasks.html', context)
 
 
 @login_required
@@ -80,7 +84,6 @@ def create_todo(request):
             instance = todo.save()
             data = serializers.serialize('json', [instance, ])
             return HttpResponse(data)
-    return HttpResponse()
 
 
 @login_required
@@ -94,7 +97,6 @@ def update_todo(request, todo_id):
                 instance = form.save()
                 data = serializers.serialize('json', [instance, ])
                 return HttpResponse(data)
-    return HttpResponse()
 
 
 @login_required
@@ -104,4 +106,3 @@ def delete_todo(request, todo_id):
         if todo.user == request.user:
             todo.delete()
             return HttpResponse()
-    return HttpResponse()
