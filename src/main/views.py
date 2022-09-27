@@ -70,7 +70,7 @@ def tasks_view(request, todo_id):
             'todo': todo,
             'tasks': tasks
         }
-        return render(request, 'main/todo_tasks.html', context)
+        return render(request, 'main/tasks.html', context)
 
 
 @login_required
