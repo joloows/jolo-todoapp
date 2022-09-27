@@ -1,5 +1,4 @@
 import json
-from wsgiref.util import request_uri
 
 from django.shortcuts import render, get_object_or_404, HttpResponse
 from django.contrib.auth.decorators import login_required
