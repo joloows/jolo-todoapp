@@ -14,23 +14,8 @@
     padding: 1rem 1.5rem;
 }
 
-h1,
-h5 {
+h1, #or {
     text-align: center;
-}
-
-.register-error-container {
-    display: block;
-    padding: 5px 20px;
-    border: 2px solid #e48b8b;
-    background-color: #FFCCCC;
-    border-radius: 20px;
-}
-
-.register-error-container p {
-    font-size: 12px;
-    color: #1a1919;
-    font-weight: bold;
 }
 
 .register-form-container input[type=text],
@@ -40,13 +25,13 @@ h5 {
     border-bottom: 2px solid #16697A;
     padding: 15px;
     outline: none;
-    margin: 5px 0 22px 0;
+    margin: 20px 0 5px 0;
     box-sizing: border-box;
 }
 
 .form-btn {
     display: block;
-    margin: 0 auto;
+    margin: 20px auto;
     padding: 10px 43px;
     outline: none;
     border: 2px solid #16697A;
