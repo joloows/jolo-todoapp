@@ -1,0 +1,20 @@
+{% load static %}
+{% block sidebar %}
+  <div class="menu-toggle">
+    <div class="hamburger">
+      <span></span>
+    </div>
+  </div>
+  <div class="sidebar">
+    <nav class="menu">
+      <div>
+        <img src="{% static 'img/test.jpg' %}" alt="" height="90" width="90">
+        <h3>{{ user.username }}</h3>
+      </div>
+      <a href={% url 'home' %} class="menu-item">Home</a>
+      <a href={% url 'profile' %} class="menu-item">Profile</a>
+      <a href="" class="menu-item is-active">Todos</a>
+      <a href={% url 'logout' %} class="menu-item">Logout</a>
+    </nav>
+  </div>
+{% endblock sidebar %}

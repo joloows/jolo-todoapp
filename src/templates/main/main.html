@@ -7,23 +7,9 @@
   <link rel="stylesheet" href="{% static 'css/popup_form.css' %}">
   <link rel="stylesheet" href="{% static 'css/pagination.css' %}">
   <div class="app">
-    <div class="menu-toggle">
-      <div class="hamburger">
-        <span></span>
-      </div>
-    </div>
-    <div class="sidebar">
-      <nav class="menu">
-        <div>
-          <img src="{% static 'img/test.jpg' %}" alt="" height="90" width="90">
-          <h3>{{ user.username }}</h3>
-        </div>
-        <a href={% url 'home' %} class="menu-item">Home</a>
-        <a href={% url 'profile' %} class="menu-item">Profile</a>
-        <a href="" class="menu-item is-active">Todos</a>
-        <a href={% url 'logout' %} class="menu-item">Logout</a>
-      </nav>
-    </div>
+    {% block sidebar %}
+      {% include "main/sidebar.html" %}
+    {% endblock sidebar %}
     <div class="todo-container">
       <div class="todo-head">
         <h1 id="todos-label">Todos</h1>
