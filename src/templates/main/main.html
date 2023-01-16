@@ -10,10 +10,10 @@
     {% block sidebar %}
       {% include "main/sidebar.html" %}
     {% endblock sidebar %}
-    <div class="todo-container">
-      <div class="todo-head">
-        <h1 id="todos-label">Todos</h1>
-        <a id="plus" class="todo-create" onclick="createTodo()"></a>
+    <div class="main-container">
+      <div class="main-head">
+        <h1 id="main-label">Todos</h1>
+        <a id="plus" class="obj-create" onclick="createObj()"></a>
         <div class="create-form-popup">
           <form method="post" class="form-container" id="todo-create-form">
             {% csrf_token %}
@@ -31,30 +31,16 @@
           </form>
         </div>
       </div>
-      <div class="todo-list">
+      <div class="obj-list">
         {% if todos %}
           <div class="todo-list-container">
             {% for todo in todos %}
               <div class="todo-object-container-{{ todo.id }}">
-                {% if todo.todo_is_finished == True %}
-                  <input class="chkbox"
-                         id="{{ todo.id }}"
-                         type="checkbox"
-                         name="todo_is_finished"
-                         value="1"
-                         checked>
-                {% else %}
-                  <input class="chkbox"
-                         id="{{ todo.id }}"
-                         type="checkbox"
-                         name="todo_is_finished"
-                         value="0">
-                {% endif %}
-                <a id="todo-object-title" href={% url 'todo' todo.id %}>{{ todo.todo_title }}</a>
+                <a id="todo-object-title" href={% url 'task' todo.id %}>{{ todo.todo_title }}</a>
                 <a onclick="showDropdown(this.id);" class="dropbtn" id="{{ todo.id }}">···</a>
                 <div class="dropdown">
                   <div id="dropdown-{{ todo.id }}" class="dropdown-content">
-                    <a class="todo-update-{{ todo.id }}" onclick="updateTodo(this)">Edit</a>
+                    <a class="todo-update-{{ todo.id }}" onclick="updateObj(this)">Edit</a>
                     <a data-url="{% url 'todo-delete' todo.id %}"
                        id="{{ todo.id }}"
                        onclick="deleteTodo(this)">Delete</a>
@@ -89,10 +75,8 @@
           </div>
         {% endif %}
       </div>
-      <script>
-        numPages = parseInt('{{ num_pages }}');
-      </script>
-      <div class="pagination-btn-container">
+      <script>numPages = parseInt('{{ num_pages }}');</script>
+      <div id="pagination" class="pagination-btn-container todo">
         <div class="pagination-btn">
           <button class="first-page-btn">
             <<
@@ -106,15 +90,13 @@
         </div>
       </div>
     </div>
-    <script type="text/javascript">
-      var csrftoken = '{{csrf_token}}'
-    </script>
+    <script type="text/javascript">var csrftoken = '{{csrf_token}}'</script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script type="text/javascript" src="{% static 'js/dropdown.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/checkbox.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/sidebar.js' %}"></script>
-    <script type="text/javascript" src="{% static 'js/update.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/create.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/update.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/delete.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/pagination.js' %}"></script>
     <!-- <script type="text/javascript" src="{% static 'js/test.js' %}"></script>  TESTS -->

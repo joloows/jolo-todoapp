@@ -1,0 +1,41 @@
+
+
+
+
+
+@media (max-width: 1180px) {
+
+    .main-container {
+        position: absolute;
+        box-sizing: border-box;
+        margin: 0;
+        width: 100%;
+        padding: 10px 10px 0 10px;
+        z-index: 1;
+    }
+
+    .menu-toggle {
+        display: block;
+        z-index: 100;
+        transition: 0.2s ease;
+    }
+
+    .sidebar {
+        position: fixed;
+        left: -250px;
+        max-width: 250px;
+        z-index: 100;
+        transition: 0.2s;
+    }
+
+    .menu-toggle.is-active {
+        left: 260px;
+        transition: 0.2s ease;
+    }
+
+    .sidebar.is-active {
+        left: 0;
+        box-shadow: 0 0 0 1600px rgba(0, 0, 0, 0.5);
+        z-index: 30;
+    }
+}

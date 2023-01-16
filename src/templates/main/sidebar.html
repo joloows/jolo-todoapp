@@ -12,8 +12,13 @@
         <h3>{{ user.username }}</h3>
       </div>
       <a href={% url 'home' %} class="menu-item">Home</a>
-      <a href={% url 'profile' %} class="menu-item">Profile</a>
-      <a href="" class="menu-item is-active">Todos</a>
+      {% if request.path == '/profile/' %}
+        <a href="" class="menu-item is-active">Profile</a>
+        <a href="{% url 'main' %}" class="menu-item">Todos</a>
+      {% else %}
+        <a href={% url 'profile' %} class="menu-item">Profile</a>
+        <a href="" class="menu-item is-active">Todos</a>
+      {% endif %}
       <a href={% url 'logout' %} class="menu-item">Logout</a>
     </nav>
   </div>

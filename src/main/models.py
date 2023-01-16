@@ -30,3 +30,7 @@ class Task(models.Model):
 
     def __str__(self) -> str:
         return f'Task #{self.id} for {self.todo}'
+
+    def save(self, *args, **kwargs):
+        super(Task, self).save(*args, **kwargs)
+        return self

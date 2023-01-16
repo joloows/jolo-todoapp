@@ -1,34 +1,123 @@
 {% extends "base/base.html" %}
 {% load static %}
 {% block content %}
-  <a href={% url 'logout' %} style="float:right; margin-right: 30px;">Logout</a>
-  <h1>Tasks Page</h1>
-  <h3>{{ todo }}</h3>
-  {% if tasks %}
-    {% for task in tasks %}
-      <h4>{{ task.task_title }}</h4>
-      <p>{{ task.task_desc }}</p>
-      {% if task.task_is_finished == True %}
-        <input class="chkbox"
-               id="{{ task.id }}"
-               type="checkbox"
-               name="task_is_finished"
-               value="1"
-               checked>
-      {% else %}
-        <input class="chkbox"
-               id="{{ task.id }}"
-               type="checkbox"
-               name="task_is_finished"
-               value="0">
-      {% endif %}
-    {% endfor %}
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script type="text/javascript">
-      var csrftoken = '{{csrf_token}}'
-    </script>
-    <script type="text/javascript" src="{% static 'js/checkbox.js' %}"></script>
-  {% else %}
-    <p>You have no tasks.</p>
-  {% endif %}
+  <link rel="stylesheet" href="{% static 'css/sidebar.css' %}">
+  <link rel="stylesheet" href="{% static 'css/main.css' %}">
+  <link rel="stylesheet" href="{% static 'css/dropdown.css' %}">
+  <link rel="stylesheet" href="{% static 'css/popup_form.css' %}">
+  <link rel="stylesheet" href="{% static 'css/pagination.css' %}">
+  <div class="app">
+    {% block sidebar %}
+      {% include "main/sidebar.html" %}
+    {% endblock sidebar %}
+    <div class="main-container">
+      <div class="main-head">
+        <h1 id="main-label" style="border: 1px solid green;">
+          Tasks        <a id="plus" class="obj-create" onclick="createObj()"></a>
+        </h1>
+        <h2 id="todo-title">Todo: {{ todo.todo_title }}</h2>
+        <div class="create-form-popup">
+          <form method="post" class="form-container" id="task-create-form">
+            {% csrf_token %}
+            <h1>Add Task</h1>
+            <label for="task_title">
+              <b>Task Title</b>
+            </label>
+            <input type="text" placeholder="Add a Title..." name="task_title" required>
+            <label for="task_desc">
+              <b>Task Description</b>
+            </label>
+            <input type="text" placeholder="Add a description..." name="task_desc">
+            <input type="submit" class="btn" value="Add">
+            <button type="button" class="btn cancel-create">Close</button>
+          </form>
+        </div>
+      </div>
+      <div class="obj-list">
+        {% if tasks %}
+          <div class="task-list-container">
+            {% for task in tasks %}
+              {% if task.task_is_finished == True %}
+                <div class="task-object-container-{{ task.id }} finished">
+                  <input class="chkbox"
+                         id="{{ task.id }}"
+                         type="checkbox"
+                         name="task_is_finished"
+                         value="1"
+                         checked>
+                  <a id="task-object-title" class="finished" href="">{{ task.task_title }}</a>
+                {% else %}
+                  <div class="task-object-container-{{ task.id }}">
+                    <input class="chkbox"
+                           id="{{ task.id }}"
+                           type="checkbox"
+                           name="task_is_finished"
+                           value="0">
+                    <a id="task-object-title" href="">{{ task.task_title }}</a>
+                  {% endif %}
+                  <a onclick="showDropdown(this.id);" class="dropbtn" id="{{ task.id }}">···</a>
+                  <div class="dropdown">
+                    <div id="dropdown-{{ task.id }}" class="dropdown-content">
+                      <a class="task-update-{{ task.id }}" onclick="updateObj(this)">Edit</a>
+                      <a data-url="{% url 'task-delete' todo_id=todo.id task_id=task.id %}"
+                         id="{{ task.id }}"
+                         onclick="deleteTask(this)">Delete</a>
+                      <a href="#">Set a Reminder</a>
+                    </div>
+                  </div>
+                  <div class="update-form-popup-{{ task.id }}">
+                    <form data-url="{% url 'task-update' todo_id=todo.id task_id=task.id %}"
+                          method="post"
+                          class="form-container"
+                          id="task-update-form-{{ task.id }}">
+                      {% csrf_token %}
+                      <h1>Edit Task</h1>
+                      <label for="task_title">
+                        <b>Task Title</b>
+                      </label>
+                      <input type="text" value="{{ task.task_title }}" name="task_title" required>
+                      <label for="task_desc">
+                        <b>Task Description</b>
+                      </label>
+                      <input type="text" value="{{ task.task_desc }}" name="task_desc">
+                      <input type="submit" class="btn" value="Update">
+                      <button type="button" class="btn cancel-{{ task.id }}">Close</button>
+                    </form>
+                  </div>
+                </div>
+              {% endfor %}
+            </div>
+          {% else %}
+            <div class="task-list-container">
+              <p id="nothing">Nothing to do.</p>
+            </div>
+          {% endif %}
+        </div>
+        <script>numPages = parseInt('{{ num_pages }}');</script>
+        <div id="pagination" class="pagination-btn-container task">
+          <div class="pagination-btn">
+            <button class="first-page-btn">
+              <<
+            </button>
+            <button class="previous-page-btn">
+              <
+            </button>
+            <h5 id="current-page">1</h5>
+            <button class="next-page-btn">></button>
+            <button class="last-page-btn">>></button>
+          </div>
+        </div>
+      </div>
+      <script type="text/javascript">var csrftoken = '{{csrf_token}}'</script>
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+      <script type="text/javascript" src="{% static 'js/dropdown.js' %}"></script>
+      <script type="text/javascript" src="{% static 'js/checkbox.js' %}"></script>
+      <script type="text/javascript" src="{% static 'js/sidebar.js' %}"></script>
+      <script type="text/javascript" src="{% static 'js/create.js' %}"></script>
+      <script type="text/javascript" src="{% static 'js/update.js' %}"></script>
+      <script type="text/javascript" src="{% static 'js/delete.js' %}"></script>
+      <script type="text/javascript" src="{% static 'js/pagination.js' %}"></script>
+      <!-- <script type="text/javascript" src="{% static 'js/test.js' %}"></script>  TESTS -->
+    </div>
+  </div>
 {% endblock content %}
