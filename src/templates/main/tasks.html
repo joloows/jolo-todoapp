@@ -12,10 +12,11 @@
     {% endblock sidebar %}
     <div class="main-container">
       <div class="main-head">
-        <h1 id="main-label" style="border: 1px solid green;">
-          Tasks        <a id="plus" class="obj-create" onclick="createObj()"></a>
-        </h1>
-        <h2 id="todo-title">Todo: {{ todo.todo_title }}</h2>
+        <h1 id="main-label">Tasks</h1>
+        <div id="plus-container">
+          <a id="plus" class="obj-create" onclick="createObj()"></a>
+        </div>
+        <h2 id="todo-title">{{ todo.todo_title }}</h2>
         <div class="create-form-popup">
           <form method="post" class="form-container" id="task-create-form">
             {% csrf_token %}

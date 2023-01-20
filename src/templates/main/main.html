@@ -13,7 +13,9 @@
     <div class="main-container">
       <div class="main-head">
         <h1 id="main-label">Todos</h1>
-        <a id="plus" class="obj-create" onclick="createObj()"></a>
+        <div id="plus-container">
+          <a id="plus" class="obj-create" onclick="createObj()"></a>
+        </div>
         <div class="create-form-popup">
           <form method="post" class="form-container" id="todo-create-form">
             {% csrf_token %}
