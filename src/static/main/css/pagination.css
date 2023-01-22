@@ -1,22 +1,31 @@
 .pagination-btn-container {
-    padding: 5px;
+    margin: 5px;
 }
 .pagination-btn {
-    border: 1px solid red;
+    font-size: 20px;
     background-color: white;
     border-radius: 15px;
-    width: fit-content;
-    height: auto;
+    width: 250px;
     text-align: center;
     margin: auto;
-    padding: 5px 15px;
+    padding: 5px;
+    user-select: none;
 }
 
 .pagination-btn > button {
-    display: none;
-    border: 1px solid black;
+    visibility: hidden;
+    height: 40px;
+    width: 40px;
+    background-color: white;
+    color: #16697a;
+    font-size: 20px;
+    font-weight: bold;
+    font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+    border: 2px solid rgba(165, 163, 163, 0.32);
+    border-radius: 50%;
     padding: 10px;
     cursor: pointer;
+    align-content: center;
 }
 
 .pagination-btn h5 {
@@ -27,4 +36,20 @@
 
 .pagination-btn > button.show {
     display: inline;
+    visibility: visible;
+}
+
+.pagination-btn > button:hover {
+    background-color: rgba(165, 163, 163, 0.32);
+}
+
+@media (max-height: 735px) {
+    .pagination-btn,
+    .pagination-btn-container {
+        position: -webkit-sticky;
+        position: sticky;
+        bottom: 10px;
+        background-color: rgba(255, 255, 255, 0.27);
+        transition: background-color 1s ease-in;
+    }
 }

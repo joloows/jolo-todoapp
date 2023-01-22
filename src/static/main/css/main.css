@@ -92,11 +92,15 @@
     text-align: center;
 }
 
-a #task-object-title,
+#task-object-title,
 #todo-object-title {
     display: inline-block;
     text-decoration: none;
     margin-left: 7px;
+}
+
+a#task-object-title {
+    pointer-events: none;
 }
 
 #task-object-title.finished {
