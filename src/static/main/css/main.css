@@ -1,0 +1,192 @@
+.main-container {
+    margin-left: max(250px, 19%);
+    margin-top: 15px;
+    width: 80%;
+    height: 100%;
+    border-radius: 10px;
+    padding: 10px;
+    position: relative;
+    box-sizing: content-box;
+}
+
+.main-head {
+    display: grid;
+    align-content: center;
+    grid-template-columns: 1fr 80px;
+    grid-template-rows: 90px auto;
+    border-radius: 30px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    padding-top: 25px;
+    padding-bottom: 25px;
+    background-color: #16697a;
+    color: white;
+}
+
+#main-label {
+    align-self: center;
+    width: fit-content;
+    height: 50px;
+    display: block;
+    margin: 0 0 0 20px;
+    font-size: 50px;
+}
+
+#plus-container {
+    grid-column: 2;
+    grid-row: 1 / span 2;
+    width: fit-content;
+    align-self: center;
+}
+
+#todo-title {
+    margin: 0 0 0 20px;
+}
+.obj-create {
+    margin-top: auto;
+    margin-bottom: auto;
+    margin-left: auto;
+    cursor: pointer;
+    font-size: 60px;
+    color: white;
+}
+
+.todo-list-container,
+.task-list-container {
+    background-color: white;
+    border-radius: 20px;
+    margin-top: 10px;
+    padding-top: 2px;
+    padding-bottom: 2px;
+}
+
+[class^="todo-object-container-"],
+[class^="task-object-container-"] {
+    display: flex;
+    height: 40px;
+    margin: 10px;
+    padding: 5px;
+    color: #16697a;
+    border: 1px solid rgb(226, 226, 226);
+    border-radius: 10px;
+    overflow: hidden;
+    transition: 0.1s linear;
+}
+
+[class^="todo-object-container-"]:hover,
+[class^="task-object-container-"]:hover {
+    background-color: rgba(211, 211, 211, 0.215);
+}
+
+#task-object-title,
+#todo-object-title {
+    display: inline-block;
+    margin-top: auto;
+    margin-bottom: auto;
+    color: #16697a;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+#nothing {
+    text-align: center;
+}
+
+#task-object-title,
+#todo-object-title {
+    display: inline-block;
+    text-decoration: none;
+    margin-left: 7px;
+}
+
+a#task-object-title {
+    pointer-events: none;
+}
+
+#todo-object-title.finished,
+#task-object-title.finished {
+    text-decoration: line-through;
+}
+
+[class^="todo-object-container-"].finished,
+[class^="task-object-container-"].finished {
+    background-color: rgba(165, 163, 163, 0.32);
+}
+
+input[type="checkbox"] {
+    display: inline-block;
+    margin-right: 15px;
+    margin-left: 10px;
+}
+
+#plus {
+    --width: 40px;
+    background-color: white;
+    width: var(--width);
+    height: var(--width);
+    border-radius: var(--width);
+    display: grid;
+    place-items: center;
+    position: relative;
+}
+
+#plus::before,
+#plus::after {
+    content: "";
+    height: calc(var(--width) / 1.5);
+    width: calc(var(--width) / 5);
+    background-color: #16697a;
+    transform: rotate(calc(var(--i) * 90deg));
+    position: absolute;
+    align-self: center;
+}
+
+#plus::before {
+    --i: 1;
+}
+
+#plus::after {
+    --i: 2;
+}
+
+#plus:hover {
+    --width: 38px;
+    background-color: rgb(211, 211, 211);
+}
+
+/* this should be global */
+@media (max-width: 1180px) {
+    .main-container {
+        position: absolute;
+        box-sizing: border-box;
+        margin: 0;
+        width: 100%;
+        padding: 10px 10px 0 10px;
+        z-index: 1;
+    }
+
+    .menu-toggle {
+        display: block;
+        z-index: 100;
+        transition: 0.2s ease;
+    }
+
+    .sidebar {
+        position: fixed;
+        left: -250px;
+        max-width: 250px;
+        z-index: 100;
+        transition: 0.2s;
+    }
+
+    .menu-toggle.is-active {
+        left: 260px;
+        transition: 0.2s ease;
+    }
+
+    .sidebar.is-active {
+        left: 0;
+        box-shadow: 0 0 0 1600px rgba(0, 0, 0, 0.5);
+        z-index: 30;
+    }
+}
