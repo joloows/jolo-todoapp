@@ -6,6 +6,18 @@
   {% block sidebar %}
     {% include 'main/sidebar.html' %}
   {% endblock sidebar %}
-  
+  <div class="container">
+    <div class="profile">
+      {% if profile.avatar %}
+        {{ profile.avatar }}
+      {% else %}
+        <img src="{% static 'img/default.png' %}" alt="" height="90" width="90">
+      {% endif %}
+      <h3>{{ profile.user.username }} {{ profile.user.id }}</h3>
+    </div>
+    <hr>
+    <p>Total todos left: {{ totalTodosLeft }}</p>
+    {% comment %} <p>Total tasks left: {{ totalTasksLeft }}</p> {% endcomment %}
+  </div>
   <script type="text/javascript" src="{% static 'js/sidebar.js' %}"></script>
 {% endblock content %}

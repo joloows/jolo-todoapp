@@ -103,10 +103,12 @@ a#task-object-title {
     pointer-events: none;
 }
 
+#todo-object-title.finished,
 #task-object-title.finished {
     text-decoration: line-through;
 }
 
+[class^="todo-object-container-"].finished,
 [class^="task-object-container-"].finished {
     background-color: rgba(165, 163, 163, 0.32);
 }

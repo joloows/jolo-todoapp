@@ -1,11 +1,22 @@
+.container {
+    background: white;
+    margin-left: max(275px, 21.5%);
+    margin-top: 15px;
+    width: 75%;
+    height: 95%;
+    border-radius: 10px;
+    padding: 10px;
+    position: relative;
+    box-sizing: content-box;
+}
 
-
-
-
+.profile {
+    padding: 15px;
+    border: 1px solid green;
+}
 
 @media (max-width: 1180px) {
-
-    .main-container {
+    .container {
         position: absolute;
         box-sizing: border-box;
         margin: 0;

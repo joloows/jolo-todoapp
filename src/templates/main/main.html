@@ -1,7 +1,10 @@
 {% extends "base/base.html" %}
 {% load static %}
 {% block content %}
+  <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0"/>
   <link rel="stylesheet" href="{% static 'css/sidebar.css' %}">
+  <link rel="stylesheet" href="{% static 'css/alert.css' %}">
   <link rel="stylesheet" href="{% static 'css/main.css' %}">
   <link rel="stylesheet" href="{% static 'css/dropdown.css' %}">
   <link rel="stylesheet" href="{% static 'css/popup_form.css' %}">
@@ -37,72 +40,85 @@
         {% if todos %}
           <div class="todo-list-container">
             {% for todo in todos %}
-              <div class="todo-object-container-{{ todo.id }}">
-                <a id="todo-object-title" href={% url 'task' todo.id %}>{{ todo.todo_title }}</a>
-                <a onclick="showDropdown(this.id);" class="dropbtn" id="{{ todo.id }}">···</a>
-                <div class="dropdown">
-                  <div id="dropdown-{{ todo.id }}" class="dropdown-content">
-                    <a class="todo-update-{{ todo.id }}" onclick="updateObj(this)">Edit</a>
-                    <a data-url="{% url 'todo-delete' todo.id %}"
-                       id="{{ todo.id }}"
-                       onclick="deleteTodo(this)">Delete</a>
-                    <a href="#">Set a Reminder</a>
+              {% if todo.todo_is_finished %}
+                <div class="todo-object-container-{{ todo.id }} finished">
+                  <a id="todo-object-title" class="finished" href={% url 'task' todo.id %}>{{ todo.todo_title }}</a>
+                {% else %}
+                  <div class="todo-object-container-{{ todo.id }}">
+                    <a id="todo-object-title" href={% url 'task' todo.id %}>{{ todo.todo_title }}</a>
+                  {% endif %}
+                  <a onclick="showDropdown(this.id);" class="dropbtn" id="{{ todo.id }}">···</a>
+                  <div class="dropdown">
+                    <div id="dropdown-{{ todo.id }}" class="dropdown-content">
+                      <a class="todo-update-{{ todo.id }}" onclick="updateObj(this)">Edit</a>
+                      <a data-url="{% url 'todo-delete' todo.id %}"
+                         id="{{ todo.id }}"
+                         onclick="deleteTodo(this)">Delete</a>
+                      <a href="#">Set a Reminder</a>
+                    </div>
+                  </div>
+                  <div class="update-form-popup-{{ todo.id }}">
+                    <form data-url="{% url 'todo-update' todo.id %}"
+                          method="post"
+                          class="form-container"
+                          id="todo-update-form-{{ todo.id }}">
+                      {% csrf_token %}
+                      <h1>Edit Todo</h1>
+                      <label for="todo_title">
+                        <b>Task Title</b>
+                      </label>
+                      <input type="text" value="{{ todo.todo_title }}" name="todo_title" required>
+                      <label for="todo_desc">
+                        <b>Task Description</b>
+                      </label>
+                      <input type="text" value="{{ todo.todo_desc }}" name="todo_desc">
+                      <input type="submit" class="btn" value="Update">
+                      <button type="button" class="btn cancel-{{ todo.id }}">Close</button>
+                    </form>
                   </div>
                 </div>
-                <div class="update-form-popup-{{ todo.id }}">
-                  <form data-url="{% url 'todo-update' todo.id %}"
-                        method="post"
-                        class="form-container"
-                        id="todo-update-form-{{ todo.id }}">
-                    {% csrf_token %}
-                    <h1>Edit Todo</h1>
-                    <label for="todo_title">
-                      <b>Task Title</b>
-                    </label>
-                    <input type="text" value="{{ todo.todo_title }}" name="todo_title" required>
-                    <label for="todo_desc">
-                      <b>Task Description</b>
-                    </label>
-                    <input type="text" value="{{ todo.todo_desc }}" name="todo_desc">
-                    <input type="submit" class="btn" value="Update">
-                    <button type="button" class="btn cancel-{{ todo.id }}">Close</button>
-                  </form>
-                </div>
-              </div>
-            {% endfor %}
+              {% endfor %}
+            </div>
+          {% else %}
+            <div class="todo-list-container">
+              <p id="nothing">Nothing to do.</p>
+            </div>
+          {% endif %}
+        </div>
+        <script>numPages = parseInt('{{ num_pages }}');</script>
+        <div id="pagination" class="pagination-btn-container todo">
+          <div class="pagination-btn">
+            <button class="first-page-btn">
+              <<
+            </button>
+            <button class="previous-page-btn">
+              <
+            </button>
+            <h5 id="current-page">1</h5>
+            <button class="next-page-btn">></button>
+            <button class="last-page-btn">>></button>
           </div>
-        {% else %}
-          <div class="todo-list-container">
-            <p id="nothing">Nothing to do.</p>
-          </div>
-        {% endif %}
-      </div>
-      <script>numPages = parseInt('{{ num_pages }}');</script>
-      <div id="pagination" class="pagination-btn-container todo">
-        <div class="pagination-btn">
-          <button class="first-page-btn">
-            <<
-          </button>
-          <button class="previous-page-btn">
-            <
-          </button>
-          <h5 id="current-page">1</h5>
-          <button class="next-page-btn">></button>
-          <button class="last-page-btn">>></button>
         </div>
       </div>
+      <script type="text/javascript">var csrftoken = '{{csrf_token}}'</script>
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+      <script type="text/javascript" src="{% static 'js/dropdown.js' %}"></script>
+      <script type="text/javascript" src="{% static 'js/checkbox.js' %}"></script>
+      <script type="text/javascript" src="{% static 'js/sidebar.js' %}"></script>
+      <script type="text/javascript" src="{% static 'js/create.js' %}"></script>
+      <script type="text/javascript" src="{% static 'js/update.js' %}"></script>
+      <script type="text/javascript" src="{% static 'js/delete.js' %}"></script>
+      <script type="text/javascript" src="{% static 'js/pagination.js' %}"></script>
+      <script type="text/javascript">
+        window.addEventListener( "pageshow", function ( event ) {
+          var historyTraversal = event.persisted || 
+                                ( typeof window.performance != "undefined" && 
+                                      window.performance.navigation.type === 2 );
+          if ( historyTraversal ) {
+            // Handle page restore.
+            window.location.reload();
+          }
+        });
+      </script>
     </div>
-    <script type="text/javascript">
-      var csrftoken = '{{csrf_token}}'
-    </script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script type="text/javascript" src="{% static 'js/dropdown.js' %}"></script>
-    <script type="text/javascript" src="{% static 'js/checkbox.js' %}"></script>
-    <script type="text/javascript" src="{% static 'js/sidebar.js' %}"></script>
-    <script type="text/javascript" src="{% static 'js/create.js' %}"></script>
-    <script type="text/javascript" src="{% static 'js/update.js' %}"></script>
-    <script type="text/javascript" src="{% static 'js/delete.js' %}"></script>
-    <script type="text/javascript" src="{% static 'js/pagination.js' %}"></script>
-    {% comment %} <script type="text/javascript" src="{% static 'js/test.js' %}"></script> {% endcomment %}
-  </div>
-{% endblock content %}
+  {% endblock content %}

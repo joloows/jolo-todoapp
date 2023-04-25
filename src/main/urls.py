@@ -18,10 +18,6 @@ urlpatterns = [
          views.update_task, name='task-update'),
     path('main/<int:todo_id>/<int:task_id>/delete/',
          views.delete_task, name='task-delete'),
-
-    # REST VIEWS
-
-    #     path('api/main/', views.Main.as_view(), name='main-api'),
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

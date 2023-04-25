@@ -3,6 +3,7 @@
 {% block content %}
   <script src="https://apis.google.com/js/platform.js" async defer></script>
   <link rel="stylesheet" href="{% static 'css/login.css' %}">
+  <link rel="stylesheet" href="{% static 'css/alert.css' %}">
   {% if messages %}
     <div class="alert">
       {% for message in messages %}<p>{{ message }}</p>{% endfor %}

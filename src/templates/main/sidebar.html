@@ -7,19 +7,25 @@
   </div>
   <div class="sidebar">
     <nav class="menu">
+      <div id="avatar-container">
+        <img id="avatar"
+             src="{{ user.profile.avatar.url }}"
+             alt="Profile Image"
+             height="90"
+             width="90">
+        <input type="file" id="uploader" accept=".jpg, .jpeg, .png, .webp">
+        <div class="overlay">
+          <a id="new_link" href="" class="icon">
+            <span class="material-symbols-outlined">edit</span>
+          </a>
+        </div>
+      </div>
       <div>
-        <img src="{% static 'img/test.jpg' %}" alt="" height="90" width="90">
         <h3>{{ user.username }}</h3>
       </div>
       <a href={% url 'home' %} class="menu-item">Home</a>
-      {% if request.path == '/profile/' %}
-        <a href="" class="menu-item is-active">Profile</a>
-        <a href="{% url 'main' %}" class="menu-item">Todos</a>
-      {% else %}
-        <a href={% url 'profile' %} class="menu-item">Profile</a>
-        <a href="" class="menu-item is-active">Todos</a>
-      {% endif %}
-      <a href={% url 'logout' %} class="menu-item">Logout</a>
+      <a href={% url 'main' %} class="menu-item is-active">Todos</a>
+      <a href={% url 'logout' %} class="menu-item logout">Logout</a>
     </nav>
   </div>
 {% endblock sidebar %}

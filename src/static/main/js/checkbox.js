@@ -1,5 +1,5 @@
 $(document).on("click", ".chkbox", function () {
-    var id = $(this).attr("id");
+    let id = $(this).attr("id");
     if ($(this).is(":checked") == true) {
         $(this).val("1");
     } else {
@@ -12,7 +12,7 @@ $(document).on("click", ".chkbox", function () {
     task.toggleClass("finished");
     taskTitle.toggleClass("finished");
 
-    var value = $(this).attr("value");
+    let value = $(this).attr("value");
     $.ajax({
         url: `${id}/is-finished/`,
         type: "POST",

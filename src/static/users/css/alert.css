@@ -1,0 +1,30 @@
+.alert {
+    position: absolute;
+    top: 5%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    background-color: #3ab678;
+    border-radius: 20px;
+    padding: 0 40px;
+    width: auto;
+    animation: fadeOut 7s forwards;
+    z-index: 10;
+}
+
+.alert p {
+    color: white;
+    font-weight: bold;
+}
+
+@keyframes fadeOut {
+    0% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
+}

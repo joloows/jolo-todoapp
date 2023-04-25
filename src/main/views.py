@@ -4,26 +4,33 @@ from django.contrib.auth.decorators import login_required
 from django.core import serializers
 from django.core.paginator import Paginator
 
-# from rest_framework import authentication, permissions
-# from rest_framework.authentication import BasicAuthentication, SessionAuthentication
-# from rest_framework.views import APIView
-# from rest_framework.decorators import api_view
-# from rest_framework.response import Response
-# from rest_framework.pagination import PageNumberPagination
-
 from .models import Todo, Task
 from .forms import TodoForm, TaskForm
-# from .serializers import TodoSerializer, TaskSerializer
 
 
 def home(request):
-
+    """
+        GET '/'
+        Simply renders the homepage.
+    """
     return render(request, 'home/home.html')
 
 
 @login_required
 def main(request):
+    """
+        GET main/
+        | Renders main app. Provides the todos
+        | of user & number of paginations as 
+        | context.
 
+        GET main/?page=<int>
+        | Return todos corresponding to page number.
+
+        GET main/?getPageNum=1
+        | Returns total number of pages for todos.
+
+    """
     user = request.user
     todos = Todo.objects.filter(user=user)
     p = Paginator(todos, 8)
@@ -35,7 +42,6 @@ def main(request):
         print(data)
         return HttpResponse(data)
 
-    # TODO: REMOVE THIS SHIT. ADD PAGE NUMBER TO 'GET' PAGE REQUESTS
     if 'getPageNum' in request.GET:
         print(request.GET)
         if request.GET.get('getPageNum') == '1':
@@ -52,6 +58,10 @@ def main(request):
 
 @login_required
 def create_todo(request):
+    """
+        POST main/create/
+        | Creates a todo and returns the todo created.
+    """
     if request.method == 'POST':
         user = request.user
         form = TodoForm(request.POST)
@@ -65,6 +75,10 @@ def create_todo(request):
 
 @login_required
 def update_todo(request, todo_id):
+    """
+        POST main/<todo_id:int>/update/
+        | Updates the todo that is referenced by todo_id.
+    """
     if request.method == 'POST':
         todo = get_object_or_404(Todo, pk=todo_id)
         user = request.user
@@ -78,6 +92,10 @@ def update_todo(request, todo_id):
 
 @login_required
 def delete_todo(request, todo_id):
+    """
+        POST main/<todo_id:int>/delete/
+        | Deletes the todo that is referenced by todo_id.
+    """
     if request.method == 'POST':
         todo = get_object_or_404(Todo, pk=todo_id)
         if todo.user == request.user:
@@ -87,7 +105,19 @@ def delete_todo(request, todo_id):
 
 @login_required
 def tasks_view(request, todo_id):
+    """
+        GET main/<int:todo_id>/
+        | Render the template for displaying the tasks. 
+        | Provides tasks of selected Todo & number of
+        | paginations as context.
 
+        GET main/<int:todo_id>/?page=<int>
+        | Return tasks corresponding to page number.
+
+        GET main/<int:todo_id>/?getPageNum=1
+        | Returns total number of pages for todos.
+
+    """
     todo = get_object_or_404(Todo, pk=todo_id)
     tasks = Task.objects.filter(todo=todo)
 
@@ -101,7 +131,6 @@ def tasks_view(request, todo_id):
         print(data)
         return HttpResponse(data)
 
-    # TODO: REMOVE THIS SHIT TOO
     if 'getPageNum' in request.GET:
         if request.GET.get('getPageNum') == '1':
             print(p.num_pages)
@@ -118,6 +147,11 @@ def tasks_view(request, todo_id):
 
 @login_required
 def task_checkbox(request, todo_id, task_id):
+    """
+        POST main/<int:todo_id>/<int:task_id>/is-finished/
+        | Updates task_is_finished of current Task object
+        | referenced by task_id
+    """
     if request.method == 'POST':
         task = Task.objects.get(id=task_id)
         if request.POST.get('value') == '1':
@@ -125,6 +159,7 @@ def task_checkbox(request, todo_id, task_id):
         else:
             task.task_is_finished = False
         task.save()
+
         data = {
             'is_finished': task.task_is_finished
         }
@@ -133,6 +168,10 @@ def task_checkbox(request, todo_id, task_id):
 
 @login_required
 def create_task(request, todo_id):
+    """
+        POST main/<int:todo_id>/create/
+        | Creates a task and returns the task created.
+    """
     if request.method == 'POST':
         form = TaskForm(request.POST)
         if form.is_valid():
@@ -148,6 +187,10 @@ def create_task(request, todo_id):
 
 @login_required
 def update_task(request, todo_id, task_id):
+    """
+        POST main/<int:todo_id>/<int:task_id>/update/
+        | Updates the todo that is referenced by task_id.
+    """
     if request.method == 'POST':
         todo = get_object_or_404(Todo, pk=todo_id)
         task = get_object_or_404(Task, pk=task_id)
@@ -162,33 +205,13 @@ def update_task(request, todo_id, task_id):
 
 @login_required
 def delete_task(request, todo_id, task_id):
+    """
+        POST main/<int:todo_id>/<int:task_id>/delete/
+        | Deletes the task that is referenced by task_id.
+    """
     if request.method == 'POST':
         todo = get_object_or_404(Todo, pk=todo_id)
         task = get_object_or_404(Task, pk=task_id)
         if todo.user == request.user:
             task.delete()
             return HttpResponse()
-
-
-''' ----------------- REST ----------------- '''
-
-
-# @api_view(['GET'])
-# def main_api(request):
-
-#     todos = Todo.objects.filter(user=request.user)
-# p = PageNumberPagination().paginate_queryset(todos, request)
-# serializer = TodoSerializer(p, many=True)
-# print(serializer.data)
-# return JsonResponse(serializer.data, safe=False)
-
-# class Main(APIView):
-#     authentication_classes = [SessionAuthentication, BasicAuthentication]
-#     permission_classes = [permissions.IsAuthenticated]
-
-#     def get(self, request, format=None):
-#         todos = Todo.objects.filter(user=request.user)
-#         p = PageNumberPagination().paginate_queryset(todos, request)
-#         serializer = TodoSerializer(p, many=True)
-
-#         return Response(serializer.data)

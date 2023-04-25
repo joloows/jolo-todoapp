@@ -1,13 +1,10 @@
-// This part should handle how the todo objects display on paginate button click
-// and how pagination buttons display based on pages and todo objects
-
-var currentPage = 1; // increments/decrements on pagination button clicks.
+let currentPage = 1; // increments/decrements on pagination button clicks.
 
 // Buttons for pagination
-var firstPageBtn = $(".first-page-btn");
-var previousPageBtn = $(".previous-page-btn");
-var nextPageBtn = $(".next-page-btn");
-var lastPageBtn = $(".last-page-btn");
+let firstPageBtn = $(".first-page-btn");
+let previousPageBtn = $(".previous-page-btn");
+let nextPageBtn = $(".next-page-btn");
+let lastPageBtn = $(".last-page-btn");
 
 initPaginationBtn();
 
@@ -74,9 +71,9 @@ function getPage(p, obj) {
             if (obj == "todo") {
                 $(".todo-list-container").empty();
                 r.forEach((data) => {
-                    var id = data.pk;
-                    var title = data.fields["todo_title"];
-                    var desc = data.fields["todo_desc"];
+                    let id = data.pk;
+                    let title = data.fields["todo_title"];
+                    let desc = data.fields["todo_desc"];
                     $(".todo-list-container").append(
                         generateTodoHTML(id, title, desc)
                     );
@@ -84,11 +81,11 @@ function getPage(p, obj) {
             } else if (obj == "task") {
                 $(".task-list-container").empty();
                 r.forEach((data) => {
-                    var todo_id = data.fields["todo"];
-                    var task_id = data.pk;
-                    var title = data.fields["task_title"];
-                    var desc = data.fields["task_desc"];
-                    var is_finished = data.fields["task_is_finished"];
+                    let todo_id = data.fields["todo"];
+                    let task_id = data.pk;
+                    let title = data.fields["task_title"];
+                    let desc = data.fields["task_desc"];
+                    let is_finished = data.fields["task_is_finished"];
                     $(".task-list-container").append(
                         generateTaskHTML(
                             todo_id,

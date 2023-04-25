@@ -3,6 +3,7 @@
 {% block content %}
   <link rel="stylesheet" href="{% static 'css/sidebar.css' %}">
   <link rel="stylesheet" href="{% static 'css/main.css' %}">
+  <link rel="stylesheet" href="{% static 'css/alert.css' %}">
   <link rel="stylesheet" href="{% static 'css/dropdown.css' %}">
   <link rel="stylesheet" href="{% static 'css/popup_form.css' %}">
   <link rel="stylesheet" href="{% static 'css/pagination.css' %}">
@@ -38,7 +39,7 @@
         {% if tasks %}
           <div class="task-list-container">
             {% for task in tasks %}
-              {% if task.task_is_finished == True %}
+              {% if task.task_is_finished %}
                 <div class="task-object-container-{{ task.id }} finished">
                   <input class="chkbox"
                          id="{{ task.id }}"
@@ -118,7 +119,6 @@
       <script type="text/javascript" src="{% static 'js/update.js' %}"></script>
       <script type="text/javascript" src="{% static 'js/delete.js' %}"></script>
       <script type="text/javascript" src="{% static 'js/pagination.js' %}"></script>
-      <!-- <script type="text/javascript" src="{% static 'js/test.js' %}"></script>  TESTS -->
     </div>
   </div>
 {% endblock content %}

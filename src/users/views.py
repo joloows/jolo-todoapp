@@ -1,11 +1,18 @@
+import json
+from django.http import JsonResponse
 from django.shortcuts import render, redirect
 from django.contrib.auth.views import LoginView, LogoutView
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 
-from .forms import UserRegisterForm
+from .models import Profile
+from .forms import UserRegisterForm, ProfileUpdateForm
 
 
 def render_register_form(request, form, status=200):
+    """
+        Helper function for rendering register form
+    """
     context = {
         'form': form,
         'username': request.POST.get('username'),
@@ -14,12 +21,17 @@ def render_register_form(request, form, status=200):
 
 
 def register_view(request):
-
+    """
+        Registers a new user. Returns a 400 response on 
+        validation error.
+    """
     if request.user.is_authenticated:
         return redirect('main')
 
     if request.method == 'POST':
+        print(request.POST)
         form = UserRegisterForm(request.POST)
+
         if form.is_valid():
             form.save()
             user = form.cleaned_data['username']
@@ -35,6 +47,10 @@ def register_view(request):
 
 
 class UserLoginView(LoginView):
+    """
+        Logs the user in and may return a 401 response 
+        in case of invalid credentials.
+    """
     template_name = 'users/login.html'
     redirect_authenticated_user = True
     next_page = 'main'
@@ -46,8 +62,26 @@ class UserLoginView(LoginView):
 
 
 class UserLogoutView(LogoutView):
+    """
+        Logs the user out.
+    """
     next_page = 'login'
 
 
-def user_profile(request):
-    return render(request, 'users/profile.html')
+@login_required
+def update_profile(request):
+    if request.method == 'POST':
+        profile = Profile.objects.get(user=request.user)
+        form = ProfileUpdateForm(
+            request.POST, request.FILES, instance=profile)
+        if form.is_valid():
+            form.save()
+            response = {
+                "message": "Successfully changed avatar."
+            }
+            return JsonResponse(response, status=200)
+        else:
+            response = {
+                "errors": form.errors
+            }
+            return JsonResponse(response, status=400)

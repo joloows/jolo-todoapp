@@ -26,7 +26,7 @@ $(document).on("submit", "#todo-create-form", function (e) {
     }
 
     e.preventDefault();
-    var formData = $(this).serializeArray();
+    let formData = $(this).serializeArray();
     $.ajax({
         url: "create/",
         type: "POST",
@@ -51,17 +51,17 @@ $(document).on("submit", "#task-create-form", function (e) {
     }
 
     e.preventDefault();
-    var formData = $(this).serializeArray();
+    let formData = $(this).serializeArray();
     $.ajax({
         url: "create/",
         type: "POST",
         data: formData,
         success: function (response) {
-            var data = JSON.parse(response);
-            var todo_id = data[0].fields["todo"];
-            var task_id = data[0].pk;
-            var title = data[0].fields["task_title"];
-            var desc = data[0].fields["task_desc"];
+            let data = JSON.parse(response);
+            let todo_id = data[0].fields["todo"];
+            let task_id = data[0].pk;
+            let title = data[0].fields["task_title"];
+            let desc = data[0].fields["task_desc"];
 
             if ($(".task-list-container").children().length < 8) {
                 $(".task-list-container").append(

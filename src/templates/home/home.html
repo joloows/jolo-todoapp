@@ -4,10 +4,10 @@
   <link rel="stylesheet" href="{% static 'css/home.css' %}">
   <div class="container">
     <div class="head-background">
-      {% comment %} <div class="wrapper"> {% endcomment %}
-      <h1>Todos made simple and easy.</h1>
-      <button onclick="location.href={% url 'register' %};" class="get-started">Start</button>
-      {% comment %} </div> {% endcomment %}
+      <div class="wrapper">
+        <h1>My Todo app.</h1>
+        <button onclick="location.href={% url 'login' %};" class="get-started">Start</button>
+      </div>
     </div>
   </div>
 {% endblock content %}
