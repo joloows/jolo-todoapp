@@ -37,11 +37,11 @@ pip install -r requirements.txt
 SECRET_KEY=<YOUR SECRET KEY HERE>
 DEBUG=True
 ```
-  You can generate SECRET_KEY by running the following in the terminal:
+&nbsp;&nbsp;&nbsp;You can generate SECRET_KEY by running the following in the terminal:
 ``` bat
 python -c 'from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())'
 ```
-Simply replace ```<YOUR SECRET KEY HERE>``` in the ```.env``` file with the key generated.
+&nbsp;&nbsp;&nbsp;Simply replace ```<YOUR SECRET KEY HERE>``` in the ```.env``` file with the key generated.
 
 6. Migrate and run the app
 ``` bat
