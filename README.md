@@ -1,6 +1,6 @@
 # Jolo's Todo App
 
-A simple To-do web app with users made with Django.
+A simple To-do web app made with Django.
 
 ## Features
 
