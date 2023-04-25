@@ -1,0 +1,158 @@
+.sidebar {
+    top: 0;
+    left: 0;
+    width: 19%;
+    min-width: 250px;
+    background-color: #16697a;
+    position: absolute;
+    height: 100%;
+}
+
+.sidebar .menu div {
+    text-align: center;
+}
+
+.sidebar .menu div h3 {
+    color: white;
+    cursor: context-menu;
+    margin-top: 0;
+    margin-bottom: 10px;
+}
+
+.sidebar .menu div img {
+    border-radius: 50%;
+    border: 2px solid white;
+}
+
+.sidebar .menu div img:hover {
+    background-color: gray;
+    cursor: pointer;
+}
+
+.sidebar .menu .menu-item {
+    display: block;
+    padding: 1em;
+    color: white;
+    text-decoration: none;
+    transition: 0.2s linear;
+}
+
+.sidebar .menu .menu-item:hover,
+.sidebar .menu .menu-item.is-active {
+    background-color: #115867;
+    color: aquamarine;
+    border-right: 5px solid aquamarine;
+}
+
+.menu-toggle {
+    display: none;
+    position: fixed;
+    top: 5px;
+    left: 10px;
+    width: 50px;
+    height: 50px;
+    border-radius: 99px;
+    background-color: #16697a;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+}
+
+.hamburger {
+    position: relative;
+    top: calc(50% - 2px);
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 32px;
+}
+
+.hamburger > span,
+.hamburger > span::before,
+.hamburger > span::after {
+    display: block;
+    position: absolute;
+    width: 100%;
+    height: 4px;
+    border-radius: 99px;
+    background-color: #fff;
+    transition-duration: 0.25s;
+}
+
+.hamburger > span::before {
+    content: "";
+    top: -8px;
+}
+
+.hamburger > span::after {
+    content: "";
+    top: 8px;
+}
+
+.menu-toggle.is-active .hamburger > span {
+    transform: rotate(45deg);
+}
+
+.menu-toggle.is-active .hamburger > span::before {
+    top: 0;
+    transform: rotate(0deg);
+}
+
+.menu-toggle.is-active .hamburger > span::after {
+    top: 0;
+    transform: rotate(90deg);
+}
+
+.menu-item.logout {
+    /* width: 100%; */
+    bottom: 0;
+    left: 0;
+    right: 0;
+    position: absolute;
+    background-color: rgba(233, 101, 81, 0.824);
+}
+
+.menu .menu-item.logout:hover {
+    background-color: rgb(210, 62, 39);
+    border-right: 1px rgb(210, 62, 39);
+    color: white;
+}
+
+#avatar-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 150px;
+    /* border: 2px solid red; */
+}
+
+.overlay {
+    position: absolute;
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    opacity: 0;
+    transition: 0.3s ease;
+    background-color: gray;
+}
+
+.overlay:hover {
+    opacity: 0.6;
+}
+
+.icon span {
+    color: white;
+    font-size: 35px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    margin: auto 0;
+}
+
+#uploader {
+    opacity: 0;
+    position: absolute;
+    z-index: 1;
+    left: 0;
+    top: 0;
+}

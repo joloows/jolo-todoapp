@@ -1,10 +1,67 @@
 {% extends "base/base.html" %}
+{% load static %}
 {% block content %}
-  <form method="post" action="">
-    {% csrf_token %}
-    {{ form }}
-    <input type="submit">
-  </form>
-  Already have an account?
-  <a href={% url 'login' %}>Login</a>
+  <script src="https://apis.google.com/js/platform.js" async defer></script>
+  <link rel="stylesheet" href="{% static 'css/register.css' %}">
+  {% if form.errors %}
+    <link rel="stylesheet" href="{% static 'css/register_error.css' %}">
+    <script src="{% static 'js/register_error.js' %}" async defer></script>
+  {% endif %}
+  <div class="form-container">
+    <div class="register-form-container">
+      <form method="post" action="">
+        {% csrf_token %}
+        <h1>Register</h1>
+        {% if 'username' in form.errors %}
+          <input class="error"
+                 id="username"
+                 type="text"
+                 placeholder="Username"
+                 name="username">
+          {% for error in form.username.errors %}<h5 class="username field-error">* {{ error }}</h5>{% endfor %}
+        {% else %}
+          <input id="username"
+                 type="text"
+                 {% if username %} value="{{ username }}"{% endif %}
+                 placeholder="Username"
+                 name="username">
+        {% endif %}
+        {% if 'password1' in form.errors %}
+          <input class="error"
+                 id="password1"
+                 type="password"
+                 placeholder="Password"
+                 name="password1">
+          {% for error in form.password1.errors %}<h5 class="password1 field-error">* {{ error }}</h5>{% endfor %}
+        {% else %}
+          <input id="password1"
+                 type="password"
+                 {% if password1 %} value="{{ password1 }}"{% endif %}
+                 placeholder="Password"
+                 name="password1">
+        {% endif %}
+        {% if 'password2' in form.errors %}
+          <input class="error"
+                 id="password2"
+                 type="password"
+                 placeholder="Confirm Password"
+                 name="password2">
+          {% for error in form.password2.errors %}<h5 class="password2 field-error">* {{ error }}</h5>{% endfor %}
+        {% else %}
+          <input id="password2"
+                 type="password"
+                 {% if password2 %} value="{{ password2 }}"{% endif %}
+                 placeholder="Confirm Password"
+                 name="password2">
+        {% endif %}
+        <input class="form-btn" type="submit" value="Register">
+        <h5 id="or">or</h5>
+      </form>
+      <div class="g-signin2" data-onsuccess="onSignIn"></div>
+      <div class="login-container">
+        <p>Already have an account?</p>
+        <a href={% url 'login' %}>Login</a>
+      </div>
+    </div>
+  </div>
 {% endblock content %}
