@@ -12,7 +12,6 @@ A simple To-do web app made with Django.
 # Requirements
 
 * python 3.9+
-* pip
 * virtualenv
 
 # Installation
@@ -27,12 +26,12 @@ cd jolo-todoapp
 virtualenv venv
 ./venv/Scripts/activate
 ```
-4. Install the dependencies
+3. Install the dependencies
 ``` bat
 pip install -r requirements.txt
 ```
 
-5. Create a ```.env```  file in ```\src``` folder and write the following:
+4. Create a ```.env```  file in ```\src``` folder and write the following:
 ``` bat
 SECRET_KEY=<YOUR SECRET KEY HERE>
 DEBUG=True
@@ -43,7 +42,7 @@ python -c 'from django.core.management.utils import get_random_secret_key; print
 ```
 &nbsp;&nbsp;&nbsp;Simply replace ```<YOUR SECRET KEY HERE>``` in the ```.env``` file with the key generated.
 
-6. Migrate and run the app
+5. Migrate and run the app
 ``` bat
 python manage.py migrate
 python manage.py runserver
